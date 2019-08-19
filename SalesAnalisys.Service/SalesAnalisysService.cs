@@ -10,8 +10,7 @@ namespace SalesAnalisys.Services
 
     public interface ISalesAnalisysService
     {
-        FileContent LoadFiles();
-        void SalesAnalisys(FileContent fileContent);
+        string SalesAnalisys();
         int ClientQuantity(FileContent fileContent);
         int SellerQuantity(FileContent fileContent);
         int? MostExpensiveSaleID(FileContent fileContent);
@@ -19,6 +18,7 @@ namespace SalesAnalisys.Services
     }
     public class SalesAnalisysService : ISalesAnalisysService
     {
+        FileContent _fileContent;
         IDataFile _dataFile;
         IModelTranslatorService _modelTranslatorService;
       
@@ -29,27 +29,35 @@ namespace SalesAnalisys.Services
             _modelTranslatorService = modelTranslatorService;
           
         }
-        public FileContent LoadFiles()
+        public void LoadFilesContent()
+        {
+         
+            var content = _dataFile.ReadAllFiles(DataPath.InputPath);
+            _fileContent = _modelTranslatorService.TranslateToFileContent(content);
+        }
+        public void WriteSalesAnalisys(string content)
+        {
+            string fileName = "OutputFile.txt";
+            _dataFile.WriteFile($"{DataPath.OutputPath}\\{fileName}", content);
+        }
+        public void CreateDirectories()
         {
             _dataFile.CreateDirectory(DataPath.InputPath);
             _dataFile.CreateDirectory(DataPath.OutputPath);
-            var content = _dataFile.ReadAllFiles(DataPath.InputPath);
-            return _modelTranslatorService.TranslateToFileContent(content);
         }
-        public void SalesAnalisys(FileContent fileContent)
+        public string SalesAnalisys()
         {
-            LoadFiles();
+           
+            CreateDirectories();
+            LoadFilesContent();
+
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Quantidade de clientes no arquivo de entrada:{ClientQuantity(fileContent)}");
-            sb.AppendLine($"Quantidade de vendedores no arquivo de entrada:{SellerQuantity(fileContent)}");
-            sb.AppendLine($"ID da venda mais cara:{MostExpensiveSaleID(fileContent)}");
-            sb.AppendLine($"O pior vendedor:{WorstSeller(fileContent)?.Name}");
-
-            string fileName = "OutputFile.txt";
-            _dataFile.WriteFile($"{DataPath.OutputPath}\\{fileName}", sb.ToString());
-
-            Console.WriteLine(sb.ToString());
-            new System.Threading.AutoResetEvent(false).WaitOne();
+            sb.AppendLine($"Quantidade de clientes no arquivo de entrada:{ClientQuantity(_fileContent)}");
+            sb.AppendLine($"Quantidade de vendedores no arquivo de entrada:{SellerQuantity(_fileContent)}");
+            sb.AppendLine($"ID da venda mais cara:{MostExpensiveSaleID(_fileContent)}");
+            sb.AppendLine($"O pior vendedor:{WorstSeller(_fileContent)?.Name}");
+            WriteSalesAnalisys(sb.ToString());
+            return sb.ToString();
         }
 
         public int ClientQuantity(FileContent fileContent) => fileContent.Clients.Count;

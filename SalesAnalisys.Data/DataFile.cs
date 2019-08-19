@@ -29,7 +29,6 @@ namespace SalesAnalisys.Data
             return filesContent.ToString();
         }
 
-
         public string ReadFile(string filePath)
         {
             byte[] result;

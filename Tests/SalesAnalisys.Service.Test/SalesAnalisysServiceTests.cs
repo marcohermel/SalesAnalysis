@@ -4,19 +4,20 @@ using SalesAnalisys.Services;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using Moq;
 
 namespace SalesAnalisys.Service.Test
 {
     public class SalesAnalisysServiceTests
     {
-      
-
+        Mock<IModelTranslatorService> _modelTranslatorService;
+        Mock<IDataFile> _dataFile;
         ISalesAnalisysService _salesAnalisysService;
         public SalesAnalisysServiceTests()
         {
-            IDataFile dataFile = new DataFile();
-            IModelTranslatorService modelTranslatorService = new ModelTranslatorService();
-            _salesAnalisysService = new SalesAnalisysService(dataFile, modelTranslatorService);
+            _modelTranslatorService = new Mock<IModelTranslatorService>();
+            _dataFile = new Mock<IDataFile>();
+            _salesAnalisysService = new SalesAnalisysService(_dataFile.Object, _modelTranslatorService.Object);
         }
 
         [Fact(DisplayName = "ClientQuantityTests")]
@@ -99,7 +100,7 @@ namespace SalesAnalisys.Service.Test
                     new Item { ItemID = 1, Price = 7.50f, Quantity= 4},
                     new Item { ItemID = 2, Price = 2.50f, Quantity= 2}
                 },
-                Seller = new Seller { Name = "Marco"}
+                Seller = new Seller { Name = "Marco" }
             });
             fileContent.Sales.Add(new Sale
             {
@@ -125,6 +126,34 @@ namespace SalesAnalisys.Service.Test
 
             //Assert
             Assert.Equal("Carlos", seller.Name);
+        }
+
+        [Fact(DisplayName = "SalesAnalisysTest")]
+        public void SalesAnalisysTest()
+        {
+
+            //Arrange
+            string content = "001Á123456789ÁMarcoÁRural \n 001Á987654321ÁFelipeÁRural";
+
+            FileContent fileContent = new FileContent
+            {
+                Clients = new List<Client> {
+                new Client{ CNPJ="123456789", Name= "Marco", Area = "Rural"},
+                new Client{ CNPJ="987654321", Name= "Felipe", Area = "Rural"}
+                }
+            };
+            _dataFile.Setup(m => m.ReadAllFiles(It.IsAny<string>())).Returns(content);
+            _dataFile.Setup(m => m.WriteFile(It.IsAny<string>(), It.IsAny<string>())).Verifiable();
+
+
+            _modelTranslatorService.Setup(m => m.TranslateToFileContent(It.IsAny<string>())).Returns(fileContent);
+
+            //Act
+            string analisysContent = _salesAnalisysService.SalesAnalisys();
+
+            //Assert
+            Assert.Contains("Quantidade de clientes no arquivo de entrada:2", analisysContent);
+            _dataFile.Verify(x => x.WriteFile(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
         }
     }
 }

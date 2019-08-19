@@ -13,17 +13,18 @@ namespace SalesAnalisys
         static void Main(string[] args)
         {
             RegisterServices();
-             var salesAnalisysService = _serviceProvider.GetService<ISalesAnalisysService>();
+            var salesAnalisysService = _serviceProvider.GetService<ISalesAnalisysService>();
 
-            FileContent fileContent = salesAnalisysService.LoadFiles();
-            salesAnalisysService.SalesAnalisys(fileContent);
-            
+            string analisysContent = salesAnalisysService.SalesAnalisys();
+            Console.WriteLine(analisysContent);
+            new System.Threading.AutoResetEvent(false).WaitOne();
+
             DisposeServices();
         }
         private static void RegisterServices()
         {
             var collection = new ServiceCollection();
-          
+
             collection.AddScoped<IDataFile, DataFile>();
             collection.AddScoped<IModelTranslatorService, ModelTranslatorService>();
             collection.AddScoped<ISalesAnalisysService, SalesAnalisysService>();
@@ -41,6 +42,6 @@ namespace SalesAnalisys
             {
                 ((IDisposable)_serviceProvider).Dispose();
             }
-        }   
+        }
     }
 }
