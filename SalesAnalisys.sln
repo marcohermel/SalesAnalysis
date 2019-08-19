@@ -1,23 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29123.88
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesAnalisys", "SalesAnalisys\SalesAnalisys.csproj", "{94B5DDAB-C1E3-4E49-B51F-C62D1D98D7C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalisys.ConsoleApp", "SalesAnalisys\SalesAnalisys.ConsoleApp.csproj", "{94B5DDAB-C1E3-4E49-B51F-C62D1D98D7C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesAnalisys.Services", "SalesAnalisys.Service\SalesAnalisys.Services.csproj", "{2BD4FF70-91EA-4131-92CE-55BAA2FF424C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalisys.Services", "SalesAnalisys.Service\SalesAnalisys.Services.csproj", "{2BD4FF70-91EA-4131-92CE-55BAA2FF424C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesAnalisys.Models", "SalesAnalisys.Models\SalesAnalisys.Models.csproj", "{F7AD7837-5577-461A-8E85-5036F59643BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalisys.Models", "SalesAnalisys.Models\SalesAnalisys.Models.csproj", "{F7AD7837-5577-461A-8E85-5036F59643BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesAnalisys.Utilities", "SalesAnalisys.Utilities\SalesAnalisys.Utilities.csproj", "{711A3987-301B-4484-A263-11489D3C1B77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalisys.Utilities", "SalesAnalisys.Utilities\SalesAnalisys.Utilities.csproj", "{711A3987-301B-4484-A263-11489D3C1B77}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{66556CA3-26D6-45B3-9C63-59B00904F125}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesAnalisys.Service.Test", "Tests\SalesAnalisys.Service.Test\SalesAnalisys.Service.Test.csproj", "{11F98C2B-0FA6-4136-AA41-D18A32BD2015}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalisys.Service.Test", "Tests\SalesAnalisys.Service.Test\SalesAnalisys.Service.Test.csproj", "{11F98C2B-0FA6-4136-AA41-D18A32BD2015}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesAnalisys.Data", "SalesAnalisys.Data\SalesAnalisys.Data.csproj", "{89E0F328-382C-4EEB-B704-7A63FDE943E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalisys.Data", "SalesAnalisys.Data\SalesAnalisys.Data.csproj", "{89E0F328-382C-4EEB-B704-7A63FDE943E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesAnalisys.Data.Test", "Tests\SalesAnalisys.Data.Test\SalesAnalisys.Data.Test.csproj", "{3AB76A0F-3A1B-4318-90ED-5A1D96DEB76B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalisys.Data.Test", "Tests\SalesAnalisys.Data.Test\SalesAnalisys.Data.Test.csproj", "{3AB76A0F-3A1B-4318-90ED-5A1D96DEB76B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

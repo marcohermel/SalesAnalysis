@@ -1,3 +1,4 @@
+using SalesAnalisys.Data;
 using SalesAnalisys.Models;
 using SalesAnalisys.Services;
 using System;
@@ -9,25 +10,27 @@ namespace SalesAnalisys.Service.Test
     public class SalesAnalisysServiceTests
     {
       
-        FileContent _fileContent;
-        SalesAnalisysService _salesAnalisysService;
+
+        ISalesAnalisysService _salesAnalisysService;
         public SalesAnalisysServiceTests()
         {
-            _fileContent = new FileContent();
-            _salesAnalisysService = new SalesAnalisysService(_fileContent);
+            IDataFile dataFile = new DataFile();
+            IModelTranslatorService modelTranslatorService = new ModelTranslatorService();
+            _salesAnalisysService = new SalesAnalisysService(dataFile, modelTranslatorService);
         }
 
         [Fact(DisplayName = "ClientQuantityTests")]
         public void ClientQuantityTests()
         {
             //Arrange
-            _fileContent.Clients.Add(new Client());
-            _fileContent.Clients.Add(new Client());
-            _fileContent.Clients.Add(new Client());
-            _fileContent.Clients.Add(new Client());
+            FileContent fileContent = new FileContent();
+            fileContent.Clients.Add(new Client());
+            fileContent.Clients.Add(new Client());
+            fileContent.Clients.Add(new Client());
+            fileContent.Clients.Add(new Client());
 
             //Act
-            int clientQuantity = _salesAnalisysService.ClientQuantity();
+            int clientQuantity = _salesAnalisysService.ClientQuantity(fileContent);
 
             //Assert
             Assert.Equal(4, clientQuantity);
@@ -36,11 +39,12 @@ namespace SalesAnalisys.Service.Test
         public void SellerQuantityTests()
         {
             //Arrange
-            _fileContent.Sellers.Add(new Seller());
-            _fileContent.Sellers.Add(new Seller());
+            FileContent fileContent = new FileContent();
+            fileContent.Sellers.Add(new Seller());
+            fileContent.Sellers.Add(new Seller());
 
             //Act
-            int clientQuantity = _salesAnalisysService.SellerQuantity();
+            int clientQuantity = _salesAnalisysService.SellerQuantity(fileContent);
 
             //Assert
             Assert.Equal(2, clientQuantity);
@@ -49,7 +53,8 @@ namespace SalesAnalisys.Service.Test
         public void MostExpensiveSaleTests()
         {
             //Arrange
-            _fileContent.Sales.Add(new Sale
+            FileContent fileContent = new FileContent();
+            fileContent.Sales.Add(new Sale
             {
                 SaleID = 1,
                 Items = new List<Item>
@@ -58,7 +63,7 @@ namespace SalesAnalisys.Service.Test
                     new Item { ItemID = 2, Price = 2.50f, Quantity= 2}
                 }
             });
-            _fileContent.Sales.Add(new Sale
+            fileContent.Sales.Add(new Sale
             {
                 SaleID = 2,
                 Items = new List<Item>
@@ -67,7 +72,7 @@ namespace SalesAnalisys.Service.Test
                     new Item { ItemID = 2, Price = 2.50f, Quantity= 5}
                 }
             });
-            _fileContent.Sales.Add(new Sale
+            fileContent.Sales.Add(new Sale
             {
                 SaleID = 2,
                 Items = new List<Item>
@@ -76,7 +81,7 @@ namespace SalesAnalisys.Service.Test
                 }
             });
             //Act
-            int? saleID = _salesAnalisysService.MostExpensiveSaleID();
+            int? saleID = _salesAnalisysService.MostExpensiveSaleID(fileContent);
 
             //Assert
             Assert.Equal(2, saleID);
@@ -85,7 +90,8 @@ namespace SalesAnalisys.Service.Test
         public void WorstSeller()
         {
             //Arrange
-            _fileContent.Sales.Add(new Sale
+            FileContent fileContent = new FileContent();
+            fileContent.Sales.Add(new Sale
             {
                 SaleID = 1,
                 Items = new List<Item>
@@ -95,7 +101,7 @@ namespace SalesAnalisys.Service.Test
                 },
                 Seller = new Seller { Name = "Marco"}
             });
-            _fileContent.Sales.Add(new Sale
+            fileContent.Sales.Add(new Sale
             {
                 SaleID = 2,
                 Items = new List<Item>
@@ -105,7 +111,7 @@ namespace SalesAnalisys.Service.Test
                 },
                 Seller = new Seller { Name = "Marco" }
             });
-            _fileContent.Sales.Add(new Sale
+            fileContent.Sales.Add(new Sale
             {
                 SaleID = 2,
                 Items = new List<Item>
@@ -115,7 +121,7 @@ namespace SalesAnalisys.Service.Test
                 Seller = new Seller { Name = "Carlos" }
             });
             //Act
-            Seller seller = _salesAnalisysService.WorstSeller();
+            Seller seller = _salesAnalisysService.WorstSeller(fileContent);
 
             //Assert
             Assert.Equal("Carlos", seller.Name);

@@ -31,13 +31,15 @@ namespace SalesAnalisys.Data.Test
         {
             //Arrange
             string filePath = $"{DataPath.InputPath}/file.txt";
-            _dataFile.WriteFile(filePath, "001");
+            _dataFile.WriteFile(filePath, "001ç1234567891234çPedroç50000");
 
             //Act
             string fileContent =  _dataFile.ReadFile(filePath);
 
             //Assert
             Assert.Contains("001", fileContent);
+            if (File.Exists(filePath))
+                File.Delete(filePath);
         }
 
         [Fact(DisplayName = "WriteFile")]

@@ -5,7 +5,14 @@ using System.Text;
 
 namespace SalesAnalisys.Data
 {
-    public class DataFile
+    public interface IDataFile
+    {
+        void CreateDirectory(string folderPath);
+        string ReadAllFiles(string folderPath);
+        void WriteFile(string filePath, string content);
+    }
+
+    public class DataFile : IDataFile
     {
 
         public void CreateDirectory(string folderPath) => Directory.CreateDirectory(folderPath);
@@ -17,7 +24,7 @@ namespace SalesAnalisys.Data
 
             StringBuilder filesContent = new StringBuilder();
             foreach (var fileInfo in directoryContents)
-                filesContent.Append("\n" +  ReadFile(fileInfo.PhysicalPath));
+                filesContent.Append("\n" + ReadFile(fileInfo.PhysicalPath));
 
             return filesContent.ToString();
         }
@@ -35,7 +42,7 @@ namespace SalesAnalisys.Data
             return Encoding.GetEncoding("iso-8859-1").GetString(result, 0, result.Length);
         }
         public void WriteFile(string filePath, string content) => File.WriteAllText(filePath, content);
-  
+
 
     }
 }

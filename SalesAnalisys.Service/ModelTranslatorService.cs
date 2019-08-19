@@ -6,9 +6,14 @@ using SalesAnalisys.Utilities;
 
 namespace SalesAnalisys.Services
 {
-    public class ModelTranslatorService
+    public interface IModelTranslatorService
     {
+        FileContent TranslateToFileContent(string AllfilesContent);
 
+    }
+
+    public class ModelTranslatorService : IModelTranslatorService
+    {
         public FileContent TranslateToFileContent(string AllfilesContent)
         {
 
