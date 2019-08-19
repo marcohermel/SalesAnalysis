@@ -61,7 +61,6 @@ namespace SalesAnalisys.Services
             dataFile.WriteFile(filePath, sb.ToString());
 
             Console.WriteLine(sb.ToString());
-           // _watcher.BeginInit();
             new System.Threading.AutoResetEvent(false).WaitOne();
         }
     }

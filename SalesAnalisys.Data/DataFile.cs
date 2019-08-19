@@ -1,11 +1,7 @@
 ﻿using Microsoft.Extensions.FileProviders;
-using SalesAnalisys.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SalesAnalisys.Data
 {
