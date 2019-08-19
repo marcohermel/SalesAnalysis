@@ -14,6 +14,7 @@ namespace SalesAnalisys.Services
 
         public WatcherService()
         {
+            SalesAnalisys();
             _watcher = new FileSystemWatcher();
         }
         public void WatchDirectory()
@@ -39,6 +40,7 @@ namespace SalesAnalisys.Services
         {
             DataFile dataFile = new DataFile();
             dataFile.CreateDirectory(DataPath.InputPath);
+            dataFile.CreateDirectory(DataPath.OutputPath);
             ModelTranslatorService modelTranslatorService = new ModelTranslatorService();
             string content = dataFile.ReadAllFiles(DataPath.InputPath);
             FileContent fileContent = modelTranslatorService.TranslateToFileContent(content);
