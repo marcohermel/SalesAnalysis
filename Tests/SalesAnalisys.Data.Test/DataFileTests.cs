@@ -31,6 +31,7 @@ namespace SalesAnalisys.Data.Test
         {
             //Arrange
             string filePath = $"{DataPath.InputPath}/file.txt";
+            _dataFile.WriteFile(filePath, "001");
 
             //Act
             string fileContent =  _dataFile.ReadFile(filePath);
